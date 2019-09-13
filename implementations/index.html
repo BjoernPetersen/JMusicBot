@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Plugin types - MusicBot</title>
+        <title>Creating an implementation - MusicBot</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -49,45 +49,45 @@
                             <li >
                                 <a href="..">Overview</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Implementations <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../implementations/">Creating an implementation</a>
+<li class="active">
+    <a href="./">Creating an implementation</a>
 </li>
                                     
 <li >
-    <a href="../implementations/BrowserOpener/">BrowserOpener</a>
+    <a href="BrowserOpener/">BrowserOpener</a>
 </li>
                                     
 <li >
-    <a href="../implementations/ConfigStorageAdapter/">Config storage</a>
+    <a href="ConfigStorageAdapter/">Config storage</a>
 </li>
                                     
 <li >
-    <a href="../implementations/api/">API</a>
+    <a href="api/">API</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Plugins <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li class="active">
-    <a href="./">Plugin types</a>
+<li >
+    <a href="../plugins/">Plugin types</a>
 </li>
                                     
 <li >
-    <a href="declaration/">Declaration</a>
+    <a href="../plugins/declaration/">Declaration</a>
 </li>
                                     
 <li >
-    <a href="lifecycle/">Lifecycle</a>
+    <a href="../plugins/lifecycle/">Lifecycle</a>
 </li>
                                     
 <li >
-    <a href="resources/">Resources</a>
+    <a href="../plugins/resources/">Resources</a>
 </li>
                                 </ul>
                             </li>
@@ -100,12 +100,12 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../implementations/api/">
+                                <a rel="next" href="..">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="declaration/">
+                                <a rel="prev" href="BrowserOpener/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -117,60 +117,28 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#plugin-types">Plugin types</a></li>
-            <li><a href="#playbackfactory">PlaybackFactory</a></li>
-            <li><a href="#provider">Provider</a></li>
-            <li><a href="#suggester">Suggester</a></li>
+        <li class="main active"><a href="#creating-an-implementation">Creating an implementation</a></li>
+            <li><a href="#what-you-need-to-supply">What you need to supply</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="plugin-types">Plugin types<a class="headerlink" href="#plugin-types" title="Permanent link">&para;</a></h1>
-<p>MusicBot allows you to write a variety of plugins. There are four specific service interfaces,
-which all extend the same basic <code>Plugin</code> interface:</p>
+<h1 id="creating-an-implementation">Creating an implementation<a class="headerlink" href="#creating-an-implementation" title="Permanent link">&para;</a></h1>
+<p>There are two implementations available, so you shouldn't need to create a new one:</p>
 <ul>
-<li><code>GenericPlugin</code></li>
-<li><a href="#playbackfactory"><code>PlaybackFactory</code></a></li>
-<li><a href="#provider"><code>Provider</code></a></li>
-<li><a href="#suggester"><code>Suggester</code></a></li>
+<li><a href="https://github.com/BjoernPetersen/MusicBot-desktop">MusicBot-desktop</a> for desktop systems</li>
+<li><a href="https://github.com/BjoernPetersen/Qbert">Qbert</a> for Android</li>
 </ul>
-<p>Also have a look at the <a href="declaration">declaration</a> section for further instructions on how
-to implement a plugin.</p>
-<h2 id="playbackfactory">PlaybackFactory<a class="headerlink" href="#playbackfactory" title="Permanent link">&para;</a></h2>
-<p>A <code>PlaybackFactory</code> provides a way to actually play a specific kind of song, for example MP3 files
-or YouTube videos.</p>
-<p>A few restrictions are imposed on Playback factories:</p>
-<ol>
-<li>It must be possible to pause and resume playback</li>
-<li>It must be possible to abort playback prematurely</li>
-<li>The end of a song must be automatically detected and reported to the bot</li>
-</ol>
-<p>Note that it is not a requirement to keep track of the duration a song has played or seek within a
-song.</p>
-<h3 id="playback">Playback<a class="headerlink" href="#playback" title="Permanent link">&para;</a></h3>
-<p>A <code>PlaybackFactory</code> creates a new <code>Playback</code> object for every song it should play.
-The <code>Playback</code> object is used to play a song exactly once.</p>
-<p>To implement <code>Playback</code>, you basically only need to implement two methods: <code>play()</code> and <code>pause()</code>.</p>
-<p>In addition to that, there is a <code>waitForFinish()</code> method that is supposed to block any callers until
-the song has finished playing. If you choose to extend the <code>AbstractPlayback</code> interface
-(recommended) you only don't have to implement the method, but only have to call the <code>markDone()</code>
-method once the song has finished.</p>
-<p>While this design has some limitations for the bot, it allows you to create implementations for a
-variety of services.
-For example, it wouldn't be possible to play Spotify songs if the only possibility were to directly
-stream songs, because Spotify doesn't allow that. Instead, the Spotify plugin simply controls the
-playback of an official Spotify client (which typically runs on the same machine as the bot).</p>
-<h2 id="provider">Provider<a class="headerlink" href="#provider" title="Permanent link">&para;</a></h2>
-<p>Providers are the most integral part to integrating music providers into the MusicBot.
-They provide access to the songs of a specific source (Spotify, local hard disk, YouTube, etc.)
-by offering a <code>search</code> by query and a <code>lookup</code> by song ID.</p>
-<p>A provider also typically depends on a <a href="#playbackfactory"><code>PlaybackFactory</code></a>, which it
-delegates to whenever the <code>Playback</code> for a song is actually requested via
-the <code>supplyPlayback()</code> method.</p>
-<h2 id="suggester">Suggester<a class="headerlink" href="#suggester" title="Permanent link">&para;</a></h2>
-<p>Suggesters provide song suggestions based on some arbitrary algorithm. For example, they could
-provide shuffled MP3s from the local disk, or songs from a Spotify playlist.</p>
-<p>A Suggester typically depends on a Provider to actually provide the songs it is suggesting.</p></div>
+<h2 id="what-you-need-to-supply">What you need to supply<a class="headerlink" href="#what-you-need-to-supply" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="BrowserOpener">BrowserOpener</a></li>
+<li><a href="Broadcaster">Broadcaster</a></li>
+<li><a href="ConfigStorageAdapter">ConfigStorageAdapter</a></li>
+<li><a href="FileStorage">FileStorage</a></li>
+<li><a href="ImageLoader">ImageLoader</a></li>
+<li><a href="SongPlayedNotifier">SongPlayedNotifier</a></li>
+<li><a href="api">API server</a></li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">

@@ -50,6 +50,27 @@
                                 <a href=".">Overview</a>
                             </li>
                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Implementations <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="implementations/">Creating an implementation</a>
+</li>
+                                    
+<li >
+    <a href="implementations/BrowserOpener/">BrowserOpener</a>
+</li>
+                                    
+<li >
+    <a href="implementations/ConfigStorageAdapter/">Config storage</a>
+</li>
+                                    
+<li >
+    <a href="implementations/api/">API</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Plugins <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -84,7 +105,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="plugins/">
+                                <a rel="prev" href="implementations/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -98,6 +119,7 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#overview">Overview</a></li>
             <li><a href="#why-you-should-use-this">Why you should use this</a></li>
+            <li><a href="#concept">Concept</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -127,8 +149,16 @@ that somebody wants to listen to a song that's only available somewhere else (ty
 Following is usually a short disruption, a series of YouTube songs/videos of decreasing quality
 and then silence, because nobody went back and resumed the previous playback.</p>
 <h3 id="independent-from-remote">Independent from remote<a class="headerlink" href="#independent-from-remote" title="Permanent link">&para;</a></h3>
-<p>No one can run off with the bot and disrupt the music, as would be the case with
-Bluetooth streaming.</p></div>
+<p>If the bot is running on a stationary device (PC, Laptop, Raspberry Pi), no one can run off with
+the bot and disrupt the music, as would be the case with simple Bluetooth streaming from a phone.</p>
+<h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
+<p>This library defines a common set of interfaces through which the different parts of the bot can
+communicate with each other. This includes base interfaces for plugins as well as various interfaces
+for server implementations.</p>
+<p>The core tries to be compatible with any operating system that supports Java.
+This especially includes Android, which only has (limited) Java 8 compatibility.</p>
+<p>Plugins are used for everything that's either OS dependent or too volatile to remain stable over a
+long time period. Most importantly this includes access to <a href="plugins/#provider">music provider APIs</a>.</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -211,5 +241,5 @@ Bluetooth streaming.</p></div>
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-08-23 18:05:04
+Build Date UTC : 2019-09-13 14:11:56
 -->
